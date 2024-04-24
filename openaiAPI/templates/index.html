@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Extractor</title>
+</head>
+<body>
+    <h1>OpenAI Code Extractor</h1>
+    <form method="POST">
+        <label for="prompt">Enter your prompt:</label>
+        <textarea id="prompt" name="prompt" rows="4" cols="50"></textarea>
+        <br>
+        <button type="submit">Get Code</button>
+    </form>
+    {% if extracted_code %}
+        <h2>Extracted Code:</h2>
+        <pre>{{ extracted_code }}</pre>
+    {% endif %}
+</body>
+</html>
