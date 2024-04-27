@@ -3,10 +3,8 @@ import CodeEditorWindow from "./CodeEditorWindow";
 import axios from "axios";
 import { classnames } from "../utils/general";
 import { languageOptions } from "../constants/languageOptions";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { defineTheme } from "../lib/defineTheme";
 import useKeyPress from "../hooks/useKeyPress";
 import Footer from "./Footer";
@@ -34,23 +32,23 @@ const Landing = () => {
   const ctrlPress = useKeyPress("Control");
 
   const onSelectChange = (sl) => {
-    console.log("selected Option...", sl);
     setLanguage(sl);
   };
 
-  useEffect(() => {
-    if (enterPress && ctrlPress) {
-      console.log("enterPress", enterPress);
-      console.log("ctrlPress", ctrlPress);
-      //handleCompile();
-      //handleCompileGemini();
-    }
-  }, [ctrlPress, enterPress]);
+  // useEffect(() => {
+  //   if (enterPress && ctrlPress) {
+  //     console.log("enterPress", enterPress);
+  //     console.log("ctrlPress", ctrlPress);
+  //     //handleCompile();
+  //     //handleCompileGemini();
+  //   }
+  // }, [ctrlPress, enterPress,codeGPT]);
   const onChange = (action, data, model) => {
     switch (action) {
       case "code": {
         if (model === 'GPT') {
           setCodeGPT(data);
+          console.log('here')
         }
         else if (model === 'Gemini') {
           setCodeGemini(data)
@@ -107,6 +105,26 @@ const Landing = () => {
         console.log("catch block...", error);
       });
   };
+
+  function getData(prompt) {
+    axios({
+      method: "POST",
+      url:"http://127.0.0.1:5000/",
+      data: {
+        prompt: prompt
+      },
+    })
+    .then((response) => {
+      const res =response.data
+      setCodeGPT(res[0])
+      setCodeGemini(res[1])
+    }).catch((error) => {
+      if (error.response) {
+        console.log(error.response)
+        console.log(error.response.status)
+        console.log(error.response.headers)
+        }
+    })}
 
   const handleCompileGemini = () => {
     // setProcessing(true);
@@ -262,9 +280,15 @@ const Landing = () => {
         value={text}
         onChange={handleChange}
         placeholder="Enter your text here..."
-        rows="4" // Number of rows
-        cols="50" // Number of columns
+        rows="4"
+        cols="50" 
       />
+      <button
+                onClick={()=>getData(text)}
+                className={classnames(
+                  "mt-4 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
+                )}
+              > Ask!</button>
     </div>
       </div>
       <div className="flex flex-row justify-center">
