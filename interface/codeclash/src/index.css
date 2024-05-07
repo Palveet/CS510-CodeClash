@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+.listItem:hover {
+  background: #e2e8f0;
+  cursor: pointer;
+}
+
+textarea{
+    width: 100%;
+    /* maxWidth: "14rem";
+    minWidth: "12rem"; */
+    border-radius: 5px;
+    color: #000;
+    font-size: 0.8rem;
+    line-height: 1.75rem;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    border: 2px solid #000000;
+    box-shadow: 5px 5px 0px 0px rgba(0,0,0);
+    margin: 10% 0 0;
+}
+
+@keyframes octocat-wave {
+  0%, 100% {
+    transform:rotate(0);
+  }
+  20%, 60% { 
+    transform:rotate(-20deg);
+  
+  } 40%, 80% {
+    transform:rotate(10deg);
+  }
+}
