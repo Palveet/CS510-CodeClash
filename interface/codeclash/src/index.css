@@ -22,17 +22,21 @@ body {
   cursor: pointer;
 }
 
-.github-corner svg {
-  position:absolute;
-  right:0;
-  top:0;
-  mix-blend-mode:darken;
-  color:#ffffff;
-  fill:#000000;
+textarea{
+    width: 100%;
+    /* maxWidth: "14rem";
+    minWidth: "12rem"; */
+    border-radius: 5px;
+    color: #000;
+    font-size: 0.8rem;
+    line-height: 1.75rem;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    border: 2px solid #000000;
+    box-shadow: 5px 5px 0px 0px rgba(0,0,0);
+    margin: 10% 0 0;
 }
-.github-corner:hover .octo-arm {
-  animation:octocat-wave .56s;
-}
+
 @keyframes octocat-wave {
   0%, 100% {
     transform:rotate(0);

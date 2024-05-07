@@ -6,7 +6,6 @@ import { languageOptions } from "../constants/languageOptions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { defineTheme } from "../lib/defineTheme";
-import useKeyPress from "../hooks/useKeyPress";
 import Footer from "./Footer";
 import OutputWindow from "./OutputWindow";
 import CustomInput from "./CustomInput";
@@ -22,27 +21,18 @@ const Landing = () => {
   const [codeGPT, setCodeGPT] = useState(javascriptDefault);
   const [codeGemini, setCodeGemini] = useState(javascriptDefault);
   const [customInput, setCustomInput] = useState("");
+  const [customInputGemini, setCustomInputGemini] = useState("");
   const [outputDetailsGPT, setOutputDetailsGPT] = useState(null);
   const [outputDetailsGemini, setOutputDetailsGemini] = useState(null);
   const [processing, setProcessing] = useState(null);
   const [theme, setTheme] = useState("cobalt");
-  const [language, setLanguage] = useState(languageOptions[0]);
+  const [language, setLanguage] = useState(languageOptions[37]);
 
-  const enterPress = useKeyPress("Enter");
-  const ctrlPress = useKeyPress("Control");
 
   const onSelectChange = (sl) => {
     setLanguage(sl);
   };
 
-  // useEffect(() => {
-  //   if (enterPress && ctrlPress) {
-  //     console.log("enterPress", enterPress);
-  //     console.log("ctrlPress", ctrlPress);
-  //     //handleCompile();
-  //     //handleCompileGemini();
-  //   }
-  // }, [ctrlPress, enterPress,codeGPT]);
   const onChange = (action, data, model) => {
     switch (action) {
       case "code": {
@@ -61,7 +51,7 @@ const Landing = () => {
     }
   };
   const handleCompile = () => {
-    setProcessing(true);
+    //setProcessing(true);
     const formData = {
       language_id: language.id,
       // encode source code in base64
@@ -101,7 +91,7 @@ const Landing = () => {
             10000
           );
         }
-        setProcessing(false);
+        //setProcessing(false);
         console.log("catch block...", error);
       });
   };
@@ -132,7 +122,7 @@ const Landing = () => {
       language_id: language.id,
       // encode source code in base64
       source_code: btoa(codeGemini),
-      stdin: btoa(customInput),
+      stdin: btoa(customInputGemini),
     };
     const options = {
       method: "POST",
@@ -280,8 +270,8 @@ const Landing = () => {
         value={text}
         onChange={handleChange}
         placeholder="Enter your text here..."
-        rows="4"
-        cols="50" 
+        rows="5"
+        cols="100" 
       />
       <button
                 onClick={()=>getData(text)}
@@ -293,7 +283,7 @@ const Landing = () => {
       </div>
       <div className="flex flex-row justify-center">
         <div className="px-4 py-2">
-          <LanguagesDropdown onSelectChange={onSelectChange} />
+          <LanguagesDropdown onSelectChange={onSelectChange}/>
         </div>
         <div className="px-4 py-2">
           <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
@@ -301,6 +291,9 @@ const Landing = () => {
       </div>
       <div className="flex flex-row space-x-4 items-start px-4 py-4">
         <div className="flex flex-col w-full h-full">
+        <h3 className={classnames(
+                  "mt-4 z-0 border-2 border-black z-10 rounded-md px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
+                )}>ChatGPT 3.5</h3>
           <CodeEditorWindow
             code={codeGPT}
             onChange={onChange}
@@ -330,6 +323,9 @@ const Landing = () => {
           </div>
         </div>
         <div className="flex flex-col w-full h-full ">
+        <h3 className={classnames(
+                  "mt-4 z-0 border-2 border-black z-10 rounded-md px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0"
+                )}>Gemini</h3>
           <CodeEditorWindow
             code={codeGemini}
             onChange={onChange}
@@ -341,8 +337,8 @@ const Landing = () => {
             <OutputWindow outputDetails={outputDetailsGemini} />
             <div className="flex flex-col items-end">
               <CustomInput
-                customInput={customInput}
-                setCustomInput={setCustomInput}
+                customInput={customInputGemini}
+                setCustomInput={setCustomInputGemini}
               />
               <button
                 onClick={handleCompileGemini}
